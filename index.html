@@ -20,46 +20,6 @@
         <button type="submit" name="akcja" value="saldo">Sprawdź saldo</button>
     </form>
 
-    <!-- Animacje dla formularzy -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let forms = document.querySelectorAll("form");
-
-        forms.forEach(form => {
-            form.addEventListener("mouseover", function () {
-                form.style.transition = "0.3s";
-                form.style.transform = "scale(1.05)";
-            });
-
-            form.addEventListener("mouseout", function () {
-                form.style.transform = "scale(1)";
-            });
-        });
-    });
-    </script>
-
-    <!-- Weryfikacja danych użytkownika -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let inputKwota = document.querySelector("input[name='kwota']");
-        let buttons = document.querySelectorAll("button");
-
-        buttons.forEach(function (button) {
-            button.addEventListener("click", function (event) {
-                let akcja = button.value;
-
-                if (akcja === "wplac" || akcja === "wyplac") {
-                    let kwota = parseFloat(inputKwota.value);
-                    
-                    if (isNaN(kwota) || kwota <= 0) {
-                        event.preventDefault();
-                        alert("Podaj poprawną kwotę (większą niż 0)!");
-                    }
-                }
-            });
-        });
-    });
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
