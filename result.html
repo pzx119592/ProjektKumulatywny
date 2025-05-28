@@ -3,57 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Wynik operacji</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            padding: 20px;
-            margin: 10px auto;
-            display: inline-block;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        p {
-            font-size: 18px;
-            color: black;
-        }
-
-        a {
-            display: block;
-            margin-top: 15px;
-            padding: 10px;
-            background: #008cba;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        a:hover {
-            background: #005f75;
-        }
-    </style>
+    <link rel="stylesheet" href="result.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Wynik operacji</h1>
         <p id="wynik"></p>
         <a href="index.html">Powrót</a>
+        <button id="wyczysc-historie">Wyczyść historię</button>
     </div>
 
     <script>
         document.getElementById("wynik").innerHTML = sessionStorage.getItem("wynik") || "Brak danych.";
     </script>
+
+    <!-- Animacja pola wyników-->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let container = document.querySelector(".container");
+
+        container.addEventListener("mouseover", function () {
+            container.style.transition = "0.3s";
+            container.style.transform = "scale(1.05)";
+        });
+
+        container.addEventListener("mouseout", function () {
+            container.style.transform = "scale(1)";
+        });
+    });
+    </script>
+
+    <!-- Historia transakcji -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let wynik = sessionStorage.getItem("wynik");
+        let historia = JSON.parse(localStorage.getItem("historia")) || [];
+
+        if (wynik) {
+            document.getElementById("wynik").innerHTML = wynik;
+
+            // Dodanie wyniku do historii
+            historia.push(wynik);
+            localStorage.setItem("historia", JSON.stringify(historia));
+        }
+
+        // Wyświetlenie historii operacji
+        let historiaDiv = document.createElement("div");
+        historiaDiv.innerHTML = "<h2>Historia transakcji:</h2>";
+        historia.forEach(entry => {
+            historiaDiv.innerHTML += `<p>${entry}</p>`;
+        });
+
+        document.body.appendChild(historiaDiv);
+
+        // Obsługa czyszczenia historii
+        let clearButton = document.getElementById("wyczysc-historie");
+        clearButton.addEventListener("click", function () {
+            localStorage.removeItem("historia");
+            historiaDiv.innerHTML = "<p>Historia została wyczyszczona.</p>";
+        });
+    });
+    </script>
+
 </body>
 </html>

@@ -1,0 +1,44 @@
+/* 🔹 Podstawowy styl strony */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+}
+
+/* 🔹 Nagłówek */
+h1 {
+    color: #333;
+}
+
+/* 🔹 Formularze */
+form {
+    background: white;
+    padding: 15px;
+    margin: 10px auto;
+    display: inline-block;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 Pola tekstowe */
+input {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 🔹 Przyciski */
+button {
+    padding: 8px 15px;
+    background: #008cba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #005f75;
+}

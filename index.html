@@ -3,56 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>System bankowy</title>
-
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        text-align: center;
-        padding: 20px;
-    }
-
-    h1 {
-        color: #333;
-    }
-
-    form {
-        background: white;
-        padding: 15px;
-        margin: 10px auto;
-        display: inline-block;
-        border-radius: 8px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    input {
-        padding: 8px;
-        margin-right: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    button {
-        padding: 8px 15px;
-        background: #008cba;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #005f75;
-    }
-</style>
-
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <h1>System bankowy</h1>
     
     <form action="question2.php" method="GET">
         <label>Kwota: </label>
-        <input type="number" name="kwota" required>
+        <input type="number" name="kwota" placeholder="Wpisz kwotę" required>
         <button type="submit" name="akcja" value="wplac">Wpłata</button>
         <button type="submit" name="akcja" value="wyplac">Wypłata</button>
     </form>
@@ -60,5 +19,47 @@
     <form action="question2.php" method="GET">
         <button type="submit" name="akcja" value="saldo">Sprawdź saldo</button>
     </form>
+
+    <!-- Animacje dla formularzy -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let forms = document.querySelectorAll("form");
+
+        forms.forEach(form => {
+            form.addEventListener("mouseover", function () {
+                form.style.transition = "0.3s";
+                form.style.transform = "scale(1.05)";
+            });
+
+            form.addEventListener("mouseout", function () {
+                form.style.transform = "scale(1)";
+            });
+        });
+    });
+    </script>
+
+    <!-- Weryfikacja danych użytkownika -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let inputKwota = document.querySelector("input[name='kwota']");
+        let buttons = document.querySelectorAll("button");
+
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                let akcja = button.value;
+
+                if (akcja === "wplac" || akcja === "wyplac") {
+                    let kwota = parseFloat(inputKwota.value);
+                    
+                    if (isNaN(kwota) || kwota <= 0) {
+                        event.preventDefault();
+                        alert("Podaj poprawną kwotę (większą niż 0)!");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
