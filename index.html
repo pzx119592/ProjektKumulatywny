@@ -2,65 +2,63 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bankowy System PHP</title>
+    <title>System bankowy</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 40px;
-        }
-        .container {
-            width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        input, button {
-            margin-top: 10px;
-            padding: 8px;
-            width: 90%;
-        }
-        .balance {
-            font-weight: bold;
-            color: green;
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    form {
+        background: white;
+        padding: 15px;
+        margin: 10px auto;
+        display: inline-block;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 8px 15px;
+        background: #008cba;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #005f75;
+    }
+</style>
+
 </head>
 <body>
+    <h1>System bankowy</h1>
+    
+    <form action="question2.php" method="GET">
+        <label>Kwota: </label>
+        <input type="number" name="kwota" required>
+        <button type="submit" name="akcja" value="wplac">Wpłata</button>
+        <button type="submit" name="akcja" value="wyplac">Wypłata</button>
+    </form>
 
-    <div class="container">
-        <h2>Konto bankowe</h2>
-
-        <?php 
-        include 'question2.php'; // Ładowanie klasy BankAccount
-        $account = new BankAccount("1234567890", "Michal Graczyk", 500.00);
-        ?>
-
-        <p class="balance">Aktualne saldo: <span><?php echo number_format($account->getBalance(), 2); ?> PLN</span></p>
-
-        <form action="" method="POST">
-            <input type="number" name="amount" placeholder="Kwota" required>
-            <button type="submit" name="deposit">Wpłać</button>
-            <button type="submit" name="withdraw">Wypłać</button>
-        </form>
-
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $amount = floatval($_POST["amount"]);
-
-            if (isset($_POST["deposit"])) {
-                $account->deposit($amount);
-            } elseif (isset($_POST["withdraw"])) {
-                $account->withdraw($amount);
-            }
-
-            echo "<p>Nowe saldo: " . number_format($account->getBalance(), 2) . " PLN</p>";
-        }
-        ?>
-    </div>
-
+    <form action="question2.php" method="GET">
+        <button type="submit" name="akcja" value="saldo">Sprawdź saldo</button>
+    </form>
 </body>
 </html>

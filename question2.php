@@ -1,59 +1,59 @@
 <?php
-class BankAccount {
-    private $accountNumber;
-    private $owner;
-    private $balance;
+session_start();
 
-    public function __construct($accountNumber, $owner, $balance = 0.0) {
-        $this->accountNumber = $accountNumber;
-        $this->owner = $owner;
-        $this->balance = $balance;
-    }
+// Włącz wyświetlanie błędów
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    //Wpłacanie środków na konto
-    public function deposit($amount) {
-        if ($amount > 0) {
-            $this->balance += $amount;
-            echo "Wpłacono: " . number_format($amount, 2) . " PLN<br>";
-        } else {
-            echo "Kwota wpłaty musi być większa od zera.<br>";
-        }
-    }
+// Inicjalizacja salda, jeśli jeszcze nie istnieje
+if (!isset($_SESSION['saldo'])) {
+    $_SESSION['saldo'] = 1000; // Początkowe saldo
+}
 
-    //Wypłacanie środków z konta
-    public function withdraw($amount) {
-        if ($amount > 0 && $amount <= $this->balance) {
-            $this->balance -= $amount;
-            echo "Wypłacono: " . number_format($amount, 2) . " PLN<br>";
-        } else {
-            echo "Nieprawidłowa kwota wypłaty lub niewystarczające środki.<br>";
-        }
-    }
-
-    //Bieżące saldo konta
-    public function getBalance() {
-        return $this->balance;
-    }
-
-    //Informacje o koncie
-    public function displayAccountInfo() {
-        echo "Numer konta: " . $this->accountNumber . "<br>";
-        echo "Właściciel: " . $this->owner . "<br>";
-        echo "Saldo: " . number_format($this->balance, 2) . " PLN<br>";
+// Funkcja do wpłacania pieniędzy
+function wplac($kwota) {
+    if ($kwota > 0) {
+        $_SESSION['saldo'] += $kwota;
+        return "<p>Wpłacono $kwota PLN. Nowe saldo: " . $_SESSION['saldo'] . " PLN.</p>";
+    } else {
+        return "<p>Kwota wpłaty musi być większa niż 0.</p>";
     }
 }
 
-// Przykład użycia
-$account1 = new BankAccount("1234567890", "Michal Graczyk", 500.00);
+// Funkcja do wypłacania pieniędzy
+function wyplac($kwota) {
+    if ($kwota > 0 && $kwota <= $_SESSION['saldo']) {
+        $_SESSION['saldo'] -= $kwota;
+        return "<p>Wypłacono $kwota PLN. Nowe saldo: " . $_SESSION['saldo'] . " PLN.</p>";
+    } elseif ($kwota > $_SESSION['saldo']) {
+        return "<p>Brak wystarczających środków na koncie.</p>";
+    } else {
+        return "<p>Kwota wypłaty musi być większa niż 0.</p>";
+    }
+}
 
-echo "<h2>Informacje o koncie początkowe:</h2>";
-$account1->displayAccountInfo();
+// Funkcja do sprawdzania salda
+function saldo() {
+    return "<p>Aktualne saldo: " . $_SESSION['saldo'] . " PLN.</p>";
+}
 
-echo "<h2>Operacje na koncie:</h2>";
-$account1->deposit(200);
-$account1->withdraw(150);
-$account1->withdraw(600);
+// Pobieranie danych z formularza
+$akcja = $_GET['akcja'] ?? null;
+$kwota = $_GET['kwota'] ?? 0;
 
-echo "<h2>Informacje o koncie końcowe:</h2>";
-$account1->displayAccountInfo();
-?>
+$wynik = "";
+
+if ($akcja == 'wplac') {
+    $wynik = wplac($kwota);
+} elseif ($akcja == 'wyplac') {
+    $wynik = wyplac($kwota);
+} elseif ($akcja == 'saldo') {
+    $wynik = saldo();
+}
+
+// Przekierowanie użytkownika do result.html i zapis wyniku w sessionStorage
+echo "<script>
+    sessionStorage.setItem('wynik', '$wynik');
+    window.location.href = 'result.html';
+</script>";
+exit;
