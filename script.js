@@ -1,80 +1,62 @@
-// Animacje dla formularzy (index.html)
 document.addEventListener("DOMContentLoaded", function () {
-    let forms = document.querySelectorAll("form");
+    const kwotaInput = document.querySelector("input[name='kwota']");
+    const form = document.querySelector("form");
+    const errorMessage = document.createElement("p");
 
-    forms.forEach(form => {
-        form.addEventListener("mouseover", function () {
-            form.style.transition = "0.3s";
-            form.style.transform = "scale(1.05)";
+    // Dynamiczne efekty dla formularzy
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("mouseenter", () => {
+            form.style.boxShadow = "0px 0px 15px rgba(0, 140, 186, 0.3)";
         });
 
-        form.addEventListener("mouseout", function () {
-            form.style.transform = "scale(1)";
+        form.addEventListener("mouseleave", () => {
+            form.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.2)";
         });
     });
-});
 
-// Weryfikacja danych użytkownika (index.html)
-document.addEventListener("DOMContentLoaded", function () {
-    let inputKwota = document.querySelector("input[name='kwota']");
-    let buttons = document.querySelectorAll("button");
+    // Walidacja kwoty
+    errorMessage.style.color = "red";
+    errorMessage.style.display = "none";
+    kwotaInput.parentElement.appendChild(errorMessage);
 
-    buttons.forEach(function (button) {
-        button.addEventListener("click", function (event) {
-            let akcja = button.value;
+    kwotaInput.addEventListener("input", function () {
+        const kwota = parseFloat(kwotaInput.value);
 
-            if (akcja === "wplac" || akcja === "wyplac") {
-                let kwota = parseFloat(inputKwota.value);
-                
-                if (isNaN(kwota) || kwota <= 0) {
-                    event.preventDefault();
-                    alert("Podaj poprawną kwotę (większą niż 0)!");
-                }
-            }
-        });
-    });
-});
-
-// Animacja pola wyników (result.html)
-document.addEventListener("DOMContentLoaded", function () {
-    let container = document.querySelector(".container");
-
-    container.addEventListener("mouseover", function () {
-        container.style.transition = "0.3s";
-        container.style.transform = "scale(1.05)";
+        if (isNaN(kwota) || kwota <= 0) {
+            errorMessage.textContent = "Podaj poprawną, dodatnią kwotę!";
+            errorMessage.style.display = "block";
+        } else {
+            errorMessage.style.display = "none";
+        }
     });
 
-    container.addEventListener("mouseout", function () {
-        container.style.transform = "scale(1)";
+    // Walidacja przed wysłaniem formularza
+    form.addEventListener("submit", function (event) {
+        const kwota = parseFloat(kwotaInput.value);
+
+        if (isNaN(kwota) || kwota <= 0) {
+            event.preventDefault();
+            alert("Podaj poprawną kwotę przed wykonaniem operacji!");
+        }
     });
-});
 
-// Historia transakcji (result.html)
-document.addEventListener("DOMContentLoaded", function () {
-    let wynik = sessionStorage.getItem("wynik");
-    let historia = JSON.parse(localStorage.getItem("historia")) || [];
-
-    if (wynik) {
-        document.getElementById("wynik").innerHTML = wynik;
-
-        // Dodanie wyniku do historii
-        historia.push(wynik);
-        localStorage.setItem("historia", JSON.stringify(historia));
+    // Podświetlanie najnowszej operacji w historii
+    let firstTransaction = document.querySelector("ul li:first-child");
+    if (firstTransaction) {
+        firstTransaction.style.background = "#ffeb3b";
+        firstTransaction.style.fontWeight = "bold";
     }
 
-    // Wyświetlenie historii operacji
-    let historiaDiv = document.createElement("div");
-    historiaDiv.innerHTML = "<h2>Historia transakcji:</h2>";
-    historia.forEach(entry => {
-        historiaDiv.innerHTML += `<p>${entry}</p>`;
-    });
+    // Animacje dla przycisków
+    document.querySelectorAll("button, .history-button, .logout-button").forEach(button => {
+        button.addEventListener("mouseenter", () => {
+            button.style.transform = "scale(1.08)";
+            button.style.boxShadow = "0px 6px 12px rgba(0, 140, 186, 0.5)";
+        });
 
-    document.body.appendChild(historiaDiv);
-
-    // Obsługa czyszczenia historii
-    let clearButton = document.getElementById("wyczysc-historie");
-    clearButton.addEventListener("click", function () {
-        localStorage.removeItem("historia");
-        historiaDiv.innerHTML = "<p>Historia została wyczyszczona.</p>";
+        button.addEventListener("mouseleave", () => {
+            button.style.transform = "scale(1)";
+            button.style.boxShadow = "0px 4px 8px rgba(0, 140, 186, 0.3)";
+        });
     });
 });

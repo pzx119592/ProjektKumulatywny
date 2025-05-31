@@ -1,44 +1,75 @@
-/* 🔹 Podstawowy styl strony */
+/* Ogólne ustawienia */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     text-align: center;
-    padding: 20px;
+    padding: 30px;
+    margin: 0;
 }
 
-/* 🔹 Nagłówek */
-h1 {
-    color: #333;
+/* Nagłówki */
+h1, h3 {
+    color: #008CBA;
 }
 
-/* 🔹 Formularze */
+/* Kontener formularzy */
 form {
     background: white;
-    padding: 15px;
-    margin: 10px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     display: inline-block;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 300px;
 }
 
-/* 🔹 Pola tekstowe */
+/* Pola tekstowe */
 input {
-    padding: 8px;
-    margin-right: 10px;
+    padding: 10px;
+    margin: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    width: 80%;
+    text-align: center;
 }
 
-/* 🔹 Przyciski */
-button {
-    padding: 8px 15px;
-    background: #008cba;
+/* Przyciski */
+button, input[type="submit"], .history-button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: #008CBA;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
 }
 
-button:hover {
-    background: #005f75;
+button:hover, input[type="submit"]:hover, .history-button:hover {
+    background: #005f7f;
+    box-shadow: 0px 4px 8px rgba(0, 140, 186, 0.3);
+    transform: scale(1.08);
+}
+
+/* Historia operacji */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background: white;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Podświetlenie najnowszej operacji */
+ul li:first-child {
+    background: #ffeb3b;
+    font-weight: bold;
 }

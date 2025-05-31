@@ -3,43 +3,38 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     margin: 0;
 }
 
-/* Nagłówek */
+/* Nagłówki */
 h2 {
     color: #008CBA;
     margin-bottom: 20px;
 }
 
-/* Lista transakcji */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
-}
-
-ul li {
+/* Formularz logowania */
+form {
     background: white;
-    padding: 12px;
-    margin: 5px auto;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    text-align: left;
-    font-size: 16px;
-}
-
-/* Podświetlenie ostatniej operacji */
-ul li:first-child {
-    background: #ffeb3b;
-    font-weight: bold;
-}
-
-/* Przycisk "Wróć" */
-.back-button {
     display: inline-block;
+    width: 320px;
+}
+
+/* Pola tekstowe */
+input {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 80%;
+    text-align: center;
+}
+
+/* Przycisk logowania */
+input[type="submit"], .logout-button {
     padding: 12px 20px;
     font-size: 16px;
     background: #008CBA;
@@ -47,14 +42,18 @@ ul li:first-child {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
-.back-button:hover {
+input[type="submit"]:hover, .logout-button:hover {
     background: #005f7f;
     box-shadow: 0px 4px 8px rgba(0, 140, 186, 0.3);
     transform: scale(1.08);
+}
+
+/* Efekt podświetlenia formularza */
+form:hover {
+    box-shadow: 0px 0px 15px rgba(0, 140, 186, 0.3);
 }
