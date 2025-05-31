@@ -1,31 +1,17 @@
 <?php
 session_start();
+require_once __DIR__ . "/Uzytkownik.php"; // Ładujemy klasę Uzytkownik
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["imie"], $_POST["nazwisko"], $_POST["haslo"])) {
-    $imie = trim($_POST['imie']);
-    $nazwisko = trim($_POST['nazwisko']);
-    $haslo = trim($_POST['haslo']);
+// Sprawdzamy, czy użytkownik wysłał formularz logowania
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['imie'], $_POST['nazwisko'], $_POST['haslo'])) {
+    $uzytkownik = new Uzytkownik($_POST['imie'], $_POST['nazwisko'], $_POST['haslo']);
 
-    // Walidacja - sprawdzamy, czy pola nie są puste
-    if (empty($imie) || empty($nazwisko) || empty($haslo)) {
+    if (!$uzytkownik->walidujDane()) {
         echo "<script>alert('Wszystkie pola muszą być wypełnione!'); window.location.href='login.php';</script>";
         exit();
     }
 
-    // Sprawdzenie poprawności hasła
-    if ($haslo === "bank123") {
-        $_SESSION['imie'] = htmlspecialchars($imie);
-        $_SESSION['nazwisko'] = htmlspecialchars($nazwisko);
-
-        setcookie("imie", $imie, time() + (86400 * 30), "/");
-        setcookie("nazwisko", $nazwisko, time() + (86400 * 30), "/");
-
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "<script>alert('Niepoprawne hasło!'); window.location.href='login.php';</script>";
-        exit();
-    }
+    $uzytkownik->zaloguj();
 }
 
 // Obsługa wylogowania
@@ -38,7 +24,6 @@ if (isset($_GET['logout'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -49,10 +34,6 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
     <h2>Podaj swoje dane</h2>
-
-    <?php if (!empty($error)): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
 
     <form action="login.php" method="POST">
         <label for="imie">Imię:</label>
