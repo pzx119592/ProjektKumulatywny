@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['imie'], $_POST['nazwis
     $uzytkownik->zaloguj();
 }
 
-// Obsługa wylogowania
+// Obsługa wylogowania użytkownika i ciasteczka
 if (isset($_GET['logout'])) {
     session_destroy();
     setcookie("imie", "", time() - 3600, "/");
@@ -34,7 +34,7 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
     <h2>Podaj swoje dane</h2>
-
+    <!-- Formularz logowania -->
     <form action="login.php" method="POST">
         <label for="imie">Imię:</label>
         <input type="text" id="imie" name="imie" value="<?php echo isset($_COOKIE['imie']) ? htmlspecialchars($_COOKIE['imie']) : ''; ?>"><br><br>

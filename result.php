@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'config.php';
-
+// Pobieramy dane użytkownika oraz historię transakcji
 $imie = $_SESSION["imie"] ?? "Anonim";
 
 $sql = "SELECT kwota, typ, data_operacji FROM transakcje WHERE imie = ? ORDER BY data_operacji DESC";
@@ -21,7 +21,7 @@ $result = $stmt->get_result();
 
 <body>
     <h2>Historia operacji</h2>
-
+    <!-- Sprawdzamy, czy użytkownik ma jakieś zapisane transakcje -->
     <?php if ($result->num_rows == 0): ?>
         <p style="color: gray;">Brak transakcji do wyświetlenia.</p>
     <?php else: ?>
@@ -36,7 +36,7 @@ $result = $stmt->get_result();
     <a class="back-button" href="index.php">Wróć</a>
 </body>
 </html>
-
+<!-- Zamknięcie SQL i  połąćzenia z bazą danych -->
 <?php
 $stmt->close();
 $conn->close();

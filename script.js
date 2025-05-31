@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
     const errorMessage = document.createElement("p");
 
-    // Dynamiczne efekty dla formularzy
+    // Dynamiczne efekty dla formularzy - podświetlenie
     document.querySelectorAll("form").forEach(form => {
         form.addEventListener("mouseenter", () => {
             form.style.boxShadow = "0px 0px 15px rgba(0, 140, 186, 0.3)";

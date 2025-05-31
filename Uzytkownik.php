@@ -3,7 +3,7 @@ class Uzytkownik {
     private $imie;
     private $nazwisko;
     private $haslo;
-
+    // Konstruktor klasy - inicjalizuje obiekt użytkownika
     public function __construct($imie, $nazwisko, $haslo) {
         $this->imie = trim($imie);
         $this->nazwisko = trim($nazwisko);
@@ -24,6 +24,7 @@ class Uzytkownik {
             header("Location: index.php");
             exit();
         } else {
+            // Obsługa błędu logowania
             echo "<script>alert('Niepoprawne hasło!'); window.location.href='login.php';</script>";
             exit();
         }

@@ -4,7 +4,7 @@ require 'config.php';
 
 // Inicjalizacja sesji salda
 if (!isset($_SESSION["saldo"])) {
-    $_SESSION["saldo"] = 1000; // Domyślne saldo
+    $_SESSION["saldo"] = 1000;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["kwota"], $_POST["akcja"])) {
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["kwota"], $_POST["akcja
     $imie = $_SESSION["imie"] ?? "Anonim";
     $nazwisko = $_SESSION["nazwisko"] ?? "";
 
-    // WALIDACJA: kwota musi być większa niż 0
+    // Walidacja wpisanych danych
     if ($kwota <= 0) {
         echo "<p style='color: red;'>Podaj poprawną kwotę!</p>";
         exit();
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["kwota"], $_POST["akcja
         exit();
     }
 
-    // Zapis do bazy danych
+    // Zapis transakcji do bazy danych
     $stmt = $conn->prepare("INSERT INTO transakcje (imie, nazwisko, kwota, typ) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssds", $imie, $nazwisko, $kwota, $akcja);
     $stmt->execute();
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["kwota"], $_POST["akcja
 <body>
     <h1>System bankowy</h1>
     <h3>Witaj, <?= htmlspecialchars($_SESSION['imie'] ?? 'Gościu') ?> <?= htmlspecialchars($_SESSION['nazwisko'] ?? '') ?>!</h3>
-
+    <!-- Formularz do wprowadzania kwoty i wyboru operacji -->
     <form action="index.php" method="POST">
         <label>Kwota:</label>
         <input type="number" name="kwota" placeholder="Podaj kwotę">
